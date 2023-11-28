@@ -2,8 +2,8 @@
 Schule Ersatzleistung Objectorientiert Bibliothekmanager
 
 
-#2 Genaue Aufgabenstellung
-
+# Genaue Aufgabenstellung
+    
 Entwickle ein kleines Programm in Python, das innerhalb deines Oberthemas verwendet werden kann.
 
 Verwende in deinem Code die grundlegende Konzepte der objektorientierten Programmierung (Klassen, Instanzen [Objekte einer Klasse], Methoden [einer Klasse], Vererbung, Modularisierung).
