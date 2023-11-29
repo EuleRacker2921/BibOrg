@@ -1,30 +1,13 @@
-import settings
-from GUI.dbhandler import *
-import tkinter
 import customtkinter
+import tk
 
-class Bibliothek(customtkinter.CTk):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.setup_app()
-        
-        
-    def setup_app(self):
-        dbbook = booksDbhandler()
-        self.selected_book = None
+from new_book import NewBookFrame
+from dbhandler import booksDbhandler
 
-        self.title = settings.TITLE
-        self.geometry = settings.GEOMETRY
-        self.resizable = settings.RESIZABLE
-        
-        # configure grid layout (4x4) for the app window
-        #  But reziable is set to False, False
-        # if reziable is set to True, True, the window will be resizable and resized automatically
 
-        self.grid_columnconfigure(1, weight=1)
-        self.grid_columnconfigure((2, 3), weight=0)
-        self.grid_rowconfigure((0, 1, 2), weight=1)
-
+class StartSiteFrame(customtkinter.CTkFrame):
+    def __init__(self, master, **kwargs):
+        super().__init__(master, **kwargs)
         self.sidebar_frame = customtkinter.CTkFrame(self, width=140 , corner_radius=10)
         self.sidebar_frame.grid(row=0, column=0, rowspan=4, sticky="nsew")
         self.sidebar_frame.grid_rowconfigure(4, weight=1)
@@ -42,10 +25,11 @@ class Bibliothek(customtkinter.CTk):
         # Search Entry
         self.entry = customtkinter.CTkEntry(self, placeholder_text="CTkEntry")
         self.entry.grid(row=0, column=1, columnspan=2, padx=(20, 0), pady=(10, 10), sticky="nsew")
-        
+
         def search_book():
+            booksdb = booksDbhandler()
             search_text = self.entry.get()  # Get the text entered in the CTkEntry widget
-            selected_book = dbbook.search_for_book(search_text)
+            selected_book = booksdb.search_for_book(search_text)
             self.overview_tab_bookname_info.configure(text=selected_book[0][1])
             print(selected_book[0][1])
 
@@ -72,7 +56,7 @@ class Bibliothek(customtkinter.CTk):
         self.tabview.add("Augeliehen An")
         self.tabview.tab("Übersicht").grid_columnconfigure(0, weight=1)  # configure grid of individual tabs
         self.tabview.tab("Details").grid_columnconfigure(0, weight=1)
-        
+
 
 
         self.overwiew_tab_label = customtkinter.CTkLabel(self.tabview.tab("Übersicht"), text="Übersicht", font=customtkinter.CTkFont(size=20, weight="bold"))
@@ -112,7 +96,7 @@ class Bibliothek(customtkinter.CTk):
         self.overview_tab_year.grid(row=7, column=0, padx=20, pady=(20, 10), sticky="w")
         self.overview_tab_year_info = customtkinter.CTkLabel(self.tabview.tab("Übersicht"), text="Jahr")
         self.overview_tab_year_info.grid(row=7, column=1, padx=20, pady=(10, 10), sticky="nsew")
-        
+
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
         customtkinter.set_appearance_mode(new_appearance_mode)
@@ -122,14 +106,6 @@ class Bibliothek(customtkinter.CTk):
 
     def open_settings(self):
         print("Settings")
+        self.master.switch_frame(NewBookFrame)
 
-    def start_app(self):
-        self.mainloop()
-    
-    def stop_app(self):
-        self.destroy()
-
-
-if __name__ == "__main__":
-    app = Bibliothek()
-    app.start_app()
+        

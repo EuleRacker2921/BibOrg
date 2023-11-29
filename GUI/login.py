@@ -1,5 +1,6 @@
 import customtkinter
 import tkinter as tk
+from StartSite import StartSiteFrame
 
 from dbhandler import usersDbhandler
 
@@ -25,34 +26,10 @@ class LoginFrame(customtkinter.CTkFrame):
         
         user_validate = db.validate_user(username, password)
         if user_validate:
+            self.master.switch_frame(StartSiteFrame)
             print("Login successful")
             return True
         return False
-    def __init__(self, master, **kwargs):
-        super().__init__(master, **kwargs)
-
-        self.user_name = customtkinter.CTkEntry(placeholder_text="Benutzername", master=self)
-        self.user_name.pack(pady=12, padx=10)
-        
-        self.user_pass = customtkinter.CTkEntry(placeholder_text="Password", show="*", master=self)
-        self.user_pass.pack(pady=12, padx=10) 
-
-        button = customtkinter.CTkButton(text='Login',command=lambda: self.login(self.user_name.get(), self.user_pass.get()), master=self )
-        button.pack(pady=12,padx=10) 
-
-        checkbox = customtkinter.CTkCheckBox(text='Remember Me', master=self) 
-        checkbox.pack(pady=12,padx=10) 
-
-    def login(self, username, password): 
-        db = usersDbhandler()
-        
-        user_validate = db.validate_user(username, password)
-        if user_validate:
-            print("Login successful")
-            return True
-        return False
-
-
-        
-
-
+    
+    def logout(self):
+        pass
