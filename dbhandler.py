@@ -2,7 +2,7 @@ import sqlite3
 
 class Datenbank():
     def __init__(self):
-        self.db = sqlite3.connect("datenbank.db")
+        self.db = sqlite3.connect("Database.db")
         self.cursor = self.db.cursor()
 
     def test_connection(self):
@@ -65,6 +65,10 @@ class booksDbhandler(Datenbank):
 
     def get_borrowed_books(self):
         self.cursor.execute("SELECT * FROM borrowed_books")
+        return self.cursor.fetchall()
+
+    def search_for_book(self, search_text):
+        self.cursor.execute("SELECT * FROM books WHERE title LIKE ? OR author LIKE ? OR genre LIKE ? OR language LIKE ? OR publisher LIKE ?", (search_text, search_text, search_text, search_text, search_text))
         return self.cursor.fetchall()
 
 class borrowedBooksDbhandler(Datenbank):
