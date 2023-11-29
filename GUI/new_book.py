@@ -1,7 +1,7 @@
 import customtkinter
 import tkinter as tk
 
-from GUI.dbhandler import booksDbhandler
+from dbhandler import booksDbhandler
 
 
 class NewBookFrame(customtkinter.CTkFrame):
@@ -10,6 +10,7 @@ class NewBookFrame(customtkinter.CTkFrame):
         
         self.label = customtkinter.CTkLabel(text="Hi", master=self)
         self.label.grid(row=1)
+
 
         
 
