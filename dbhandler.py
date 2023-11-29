@@ -118,3 +118,10 @@ class usersDbhandler(Datenbank):
     def get_user(self, id):
         self.cursor.execute("SELECT * FROM users WHERE id=?", (id,))
         return self.cursor.fetchone()
+    
+    def validate_user(self, username, password):
+        self.cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
+        if self.cursor.fetchone():
+            return True
+        else:
+            return False
