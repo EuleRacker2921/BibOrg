@@ -26,7 +26,7 @@ class LoginFrame(customtkinter.CTkFrame):
         self.user_pass = customtkinter.CTkEntry(placeholder_text="Password", show="*", master=self)
         self.user_pass.grid(row=2, column=1, pady=12, padx=10, sticky="nsew") 
 
-        button = customtkinter.CTkButton(text='Login',command=lambda: self.login(self.user_name.get(), self.user_pass.get()), master=self )
+        button = customtkinter.CTkButton(text='Login',command=lambda: self.login(self.user_name.get(), self.user_pass.get()), master=self, width=200, height=100 )
         button.grid(row=3, column=1, rowspan=2, pady=12, padx=10) 
 
         self.error_label = customtkinter.CTkLabel(text="Falscher Benutzername oder Passwort", master=self, fg_color="red")
@@ -38,6 +38,10 @@ class LoginFrame(customtkinter.CTkFrame):
         if user_validate:
             self.master.switch_frame(StartSiteFrame)
             print("Login successful")
+            self.master.geometry("1375x975")  # Set the frame size to 1080x720
+
+        # Rest of the code...
+        
             return True
         else:
             print("Login failed. Please check your username and password.")

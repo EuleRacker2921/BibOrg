@@ -47,8 +47,8 @@ class booksDbhandler(Datenbank):
         self.cursor.execute("INSERT INTO books (title, author, publication_year, description, ESBN, genre, language, publisher, pages, borrowed) VALUES (?,?,?,?,?,?,?,?,?,?)", (title, author, publication_year, description, ESBN, genre, language, publisher, pages, borrowed))
         self.db.commit()
 
-    def update_book(self, id, title, author, publication_year, description, ESBN, genre, language, publisher, pages, borrowed):
-        self.cursor.execute("UPDATE books SET title=?, author=?, publication_year=?, description=?, ESBN=?, genre=?, language=?, publisher=?, pages=?, borrowed=? WHERE id=?", (title, author, publication_year, description, ESBN, genre, language, publisher, pages, borrowed, id))
+    def update_book(self, id, title, author, publication_year, description, ESBN, genre, language, publisher, pages):
+        self.cursor.execute("UPDATE books SET title=?, author=?, publication_year=?, description=?, ESBN=?, genre=?, language=?, publisher=?, pages=? WHERE id=?", (title, author, publication_year, description, ESBN, genre, language, publisher, pages, id))
         self.db.commit()
 
     def delete_book(self, id):
@@ -67,9 +67,13 @@ class booksDbhandler(Datenbank):
         self.cursor.execute("SELECT * FROM borrowed_books")
         return self.cursor.fetchall()
 
-    def search_for_book(self, search_text):
+    def search_for_books(self, search_text):
         self.cursor.execute("SELECT * FROM books WHERE title LIKE ? OR author LIKE ? OR genre LIKE ? OR language LIKE ? OR publisher LIKE ?", (search_text, search_text, search_text, search_text, search_text))
         return self.cursor.fetchall()
+    
+    def change_borrow_status_book(self, id):
+        self.cursor.execute("UPDATE books SET borrowed=? WHERE id=?", (0, id))
+        self.db.commit()
 
 class borrowedBooksDbhandler(Datenbank):
     def __init__(self):
@@ -79,9 +83,13 @@ class borrowedBooksDbhandler(Datenbank):
         self.cursor.execute("INSERT INTO borrowed_books (customer_id, book_id, start_date, end_date) VALUES (?,?,?,?)", (customer_id, book_id, start_date, end_date))
         self.db.commit()
 
-    def update_borrowed_book(self, id, customer_id, book_id, start_date, end_date):
-        self.cursor.execute("UPDATE borrowed_books SET customer_id=?, book_id=?, start_date=?, end_date=? WHERE id=?", (customer_id, book_id, start_date, end_date, id))
+    def update_borrowed_book(self, id, customer_id, book_id, start_date, end_date, zurückgegeben):
+        self.cursor.execute("UPDATE borrowed_books SET customer_id=?, book_id=?, start_date=?, end_date=? zurückgegeben=? WHERE id=?", (customer_id, book_id, start_date, end_date,zurückgegeben,  id))
         self.db.commit()
+
+    def change_borrow_status_book(self, id, zurückgegeben):
+        self.cursor.execute("UPDATE borrowed_books SET zurückgegeben=? WHERE id=?", (zurückgegeben, id))
+        self.db.commit()    
 
     def delete_borrowed_book(self, id):
         self.cursor.execute("DELETE FROM borrowed_books WHERE id=?", (id,))
@@ -92,7 +100,7 @@ class borrowedBooksDbhandler(Datenbank):
         return self.cursor.fetchall()
 
     def get_borrowed_book(self, id):
-        self.cursor.execute("SELECT * FROM borrowed_books WHERE id=?", (id,))
+        self.cursor.execute("SELECT * FROM borrowed_books WHERE book_id=? AND zurückgegeben=0", (id,))
         return self.cursor.fetchone()
     
 class usersDbhandler(Datenbank):
