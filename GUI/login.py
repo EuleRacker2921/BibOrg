@@ -9,6 +9,7 @@ import tkinter.messagebox as messagebox
 class LoginFrame(customtkinter.CTkFrame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
+        self.place(relx=0.5, rely=0.5, anchor="center")
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)

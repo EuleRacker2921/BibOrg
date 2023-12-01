@@ -3,7 +3,7 @@ import customtkinter
 from book_bearbeiten import book_bearbeiten_Frame
 from new_book import NewBookFrame
 from dbhandler import booksDbhandler, borrowedBooksDbhandler, customerDbhandler
-
+from new_customer import NewCustomerFrame
 
 class DetailsFrame(customtkinter.CTkFrame):
     def __init__(self, master, **kwargs):
@@ -26,7 +26,7 @@ class DetailsFrame(customtkinter.CTkFrame):
 
         self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, text="Neues Buch"  , command=lambda: self.master.switch_frame(NewBookFrame))
         self.sidebar_button_1.grid(row=1, column=0, padx=20, pady=10)
-        self.sidebar_button_2 = customtkinter.CTkButton(self.sidebar_frame, text="Neuer Kunde", command=self.sidebar_button_event)
+        self.sidebar_button_2 = customtkinter.CTkButton(self.sidebar_frame, text="Neuer Kunde", command=lambda: self.master.switch_frame(NewCustomerFrame))
         self.sidebar_button_2.grid(row=2, column=0, padx=20, pady=10)
 
         self.favorite_button = customtkinter.CTkButton(self.sidebar_frame, text="", bg_color="transparent", fg_color="transparent", border_width=0, hover=False )
@@ -137,7 +137,7 @@ class DetailsFrame(customtkinter.CTkFrame):
         self.overview_spaceholder4 = customtkinter.CTkLabel(self.tabview.tab("Details"), text="", fg_color="transparent", bg_color="transparent")
         self.overview_spaceholder4.grid(row=13, column=0, padx=20, pady=(20, 10), sticky="w")
 
-        self.bearbeiten_button = customtkinter.CTkButton(self.tabview.tab("Details"), text="Bearbeiten", command=self.switch_frame_book_bearbeiten_Frame)
+        self.bearbeiten_button = customtkinter.CTkButton(self.tabview.tab("Details"), text="Bearbeiten", command=lambda: self.master.switch_frame(book_bearbeiten_Frame))
         self.bearbeiten_button.grid(row=14, column=0, padx=20, pady=(10, 10), sticky="w")
 
         self.delete_button = customtkinter.CTkButton(self.tabview.tab("Details"), text="Löschen", command=self.delete_book)
@@ -186,11 +186,7 @@ class DetailsFrame(customtkinter.CTkFrame):
         book = booksdb.get_book(book_id)
         return book
 
-    def change_appearance_mode_event(self, new_appearance_mode: str):
-        customtkinter.set_appearance_mode(new_appearance_mode)
 
-    def sidebar_button_event(self):
-        self.master.switch_frame(NewBookFrame)
 
     def back_button_event(self):
         self.master.go_back()
@@ -198,9 +194,6 @@ class DetailsFrame(customtkinter.CTkFrame):
     def open_settings(self):
         print("Settings")
         
-    def switch_frame_book_bearbeiten_Frame(self):
-        self.master.switch_frame(book_bearbeiten_Frame)
-
     def delete_book(self):
         booksdb = booksDbhandler()
         booksdb.delete_book(self.book[0])
