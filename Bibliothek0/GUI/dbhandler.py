@@ -70,9 +70,9 @@ class booksDbhandler(Datenbank):
     def search_for_books(self, search_text):
         self.cursor.execute("SELECT * FROM books WHERE title LIKE ? OR author LIKE ? OR genre LIKE ? OR language LIKE ? OR publisher LIKE ?", (search_text, search_text, search_text, search_text, search_text))
         return self.cursor.fetchall()
-    
-    def change_borrow_status_book(self, id):
-        self.cursor.execute("UPDATE books SET borrowed=? WHERE id=?", (0, id))
+
+    def change_borrow_status_book(self, id, borrowed):
+        self.cursor.execute("UPDATE books SET borrowed=? WHERE id=?", (borrowed, id))
         self.db.commit()
 
 class borrowedBooksDbhandler(Datenbank):

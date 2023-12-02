@@ -1,0 +1,10 @@
+GEOMETRY = "720x480+0+0"
+TITLE = "Bibliothek"
+RESIZABLE = False, False
+GRID_ROWCONFIGURE = 0, "weight", 1
+GRID_COLUMNCONFIGURE = 0, "weight", 1
+FRAME_STACK = []
+CURRENT_FRAME = None
+DETAIL_VIEW_BOOK = None
+_FRAME = None
+

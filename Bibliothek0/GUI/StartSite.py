@@ -1,6 +1,7 @@
 import customtkinter
 
 from Details import DetailsFrame
+from settings import settings_view_Frame
 from new_book import NewBookFrame
 from dbhandler import booksDbhandler
 from new_customer import NewCustomerFrame
@@ -86,7 +87,7 @@ class StartSiteFrame(customtkinter.CTkFrame):
 
         self.go_back_button = customtkinter.CTkButton(self.sidebar_frame, text="Zurück", command=self.back_button_event)
         self.go_back_button.grid(row=16, column=0, padx=20, pady=10)
-        self.settings_button = customtkinter.CTkButton(self.sidebar_frame, text="Settings", command=self.open_settings)	
+        self.settings_button = customtkinter.CTkButton(self.sidebar_frame, text="Settings", command=lambda: self.master.switch_frame(settings_view_Frame))
         self.settings_button.grid(row=17, column=0, padx=20, pady=(10, 10))
 
 

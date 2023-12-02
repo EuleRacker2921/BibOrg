@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import customtkinter
 
 from book_bearbeiten import book_bearbeiten_Frame
@@ -140,8 +141,11 @@ class DetailsFrame(customtkinter.CTkFrame):
         self.bearbeiten_button = customtkinter.CTkButton(self.tabview.tab("Details"), text="Bearbeiten", command=lambda: self.master.switch_frame(book_bearbeiten_Frame))
         self.bearbeiten_button.grid(row=14, column=0, padx=20, pady=(10, 10), sticky="w")
 
+        self.ausleihen_button = customtkinter.CTkButton(self.tabview.tab("Details"), text="Ausleihen An", command=self.book_ausleihen_dialog)
+        self.ausleihen_button.grid(row=14, column=1, padx=20, pady=(10, 10), sticky="e")
+
         self.delete_button = customtkinter.CTkButton(self.tabview.tab("Details"), text="Löschen", command=self.delete_book)
-        self.delete_button.grid(row=14, column=1, padx=20, pady=(10, 10), sticky="e")
+        self.delete_button.grid(row=14, column=2, padx=20, pady=(10, 10), sticky="e")
 
 
         self.zusammenfassung_tab_label = customtkinter.CTkLabel(self.tabview.tab("Zusammenfassung"), text="Zusammenfassung", font=customtkinter.CTkFont(size=20, weight="bold"))
@@ -160,11 +164,26 @@ class DetailsFrame(customtkinter.CTkFrame):
             self.ausgeliehen_tab_tickbox_zurückgegeben = customtkinter.CTkCheckBox(self.tabview.tab("Ausgeliehen"), text="Zurückgegeben", command=self.change_borrow_status_book )
             self.ausgeliehen_tab_tickbox_zurückgegeben.grid(row=2, column=0, padx=20, pady=(10, 10), sticky="w")
 
+    def book_ausleihen_dialog(self):
+        self.dialog = customtkinter.CTkInputDialog(title="Ausleihen", text="Wer möchte das Buch ausleihen?")
+        self.ausleihen_book()
+
+    def ausleihen_book(self):
+        booksdb = booksDbhandler()
+        booksdb.change_borrow_status_book(id=self.book[0], borrowed=1)
+        borrowedbooksdb = borrowedBooksDbhandler()
+        end_date = datetime.now() + timedelta(weeks=4)
+        borrowedbooksdb.add_borrowed_book(book_id=self.book[0], customer_id=self.dialog.get_input(), start_date=datetime.now(), end_date=end_date)
+        print("saved status of book")
+        booksdb.close()
+        borrowedbooksdb.close()
+        self.master.go_back()
+
     def change_borrow_status_book(self):
         booksdb = booksDbhandler()
         booksdb.change_borrow_status_book(self.book[0])
         borrowedbooksdb = borrowedBooksDbhandler()
-        borrowedbooksdb.change_borrow_status_book(self.book[0], 1)
+        borrowedbooksdb.change_borrow_status_book(self.book[0], 0)
         self.master.go_back()
 
 
@@ -173,10 +192,13 @@ class DetailsFrame(customtkinter.CTkFrame):
         customerdb = customerDbhandler()
         booksdb = borrowedBooksDbhandler()
         ausgeliehendes_book = booksdb.get_borrowed_book(book_id)
+        
+        booksdb.close()
         if ausgeliehendes_book is not None:
             ausleiher = ausgeliehendes_book[1]
             ausleihername = customerdb.get_customer(ausleiher)
             print(ausleihername[1])
+            customerdb.close()
             return ausleihername[1]
         else:
             return None
@@ -184,6 +206,7 @@ class DetailsFrame(customtkinter.CTkFrame):
     def get_book(self, book_id):
         booksdb = booksDbhandler()
         book = booksdb.get_book(book_id)
+        booksdb.close()
         return book
 
 
@@ -197,6 +220,7 @@ class DetailsFrame(customtkinter.CTkFrame):
     def delete_book(self):
         booksdb = booksDbhandler()
         booksdb.delete_book(self.book[0])
+        booksdb.close()
         self.master.go_back()
 
         
