@@ -2,9 +2,7 @@ import customtkinter
 
 from  ..datenbank import MediaDbhandler
 
-from .detailsView import DetailsFrame
-from .newCustomerView import NewCustomerFrame
-from .newBookView import NewBookFrame
+
 
 
 class StartFrame(customtkinter.CTkFrame):
@@ -32,9 +30,9 @@ class StartFrame(customtkinter.CTkFrame):
         self.logo_label = customtkinter.CTkLabel(self.sidebar_frame, text="Bücherei", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
 
-        self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, text="Neues Buch"  , command=lambda: self.master.switch_frame(NewBookFrame))
+        self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, text="Neues Medium"  , command=lambda: self.master.switch_frame(self.master.new_media_frame))
         self.sidebar_button_1.grid(row=1, column=0, padx=20, pady=10)
-        self.sidebar_button_2 = customtkinter.CTkButton(self.sidebar_frame, text="Neuer Kunde", command=lambda: self.master.switch_frame(NewCustomerFrame))
+        self.sidebar_button_2 = customtkinter.CTkButton(self.sidebar_frame, text="Neuer Kunde", command=lambda: self.master.switch_frame(self.master.new_customer_frame))
         self.sidebar_button_2.grid(row=2, column=0, padx=20, pady=10)
 
         self.favorite_button = customtkinter.CTkButton(self.sidebar_frame, text="", bg_color="transparent", fg_color="transparent", border_width=0, hover=False )
@@ -89,7 +87,7 @@ class StartFrame(customtkinter.CTkFrame):
         self.scrollview.grid(row=1, column=1, columnspan=2 , padx=(20, 0), pady=(20, 0), sticky="nsew")
         self.scrollview.grid_columnconfigure(0, weight=1)
         self.scrollview.grid_rowconfigure(0, weight=1)
-        self.table_label = customtkinter.CTkLabel(self.scrollview, text="Buchname", anchor="w")
+        self.table_label = customtkinter.CTkLabel(self.scrollview, text="Titel", anchor="w")
         self.table_label.grid(row=0, column=0, padx=20, pady=(10, 0))
         self.table_label1 = customtkinter.CTkLabel(self.scrollview, text="Autor", anchor="w")
         self.table_label1.grid(row=0, column=1, padx=20, pady=(10, 0))
@@ -101,24 +99,26 @@ class StartFrame(customtkinter.CTkFrame):
 
 
         media_items = self.master.bibliothek.search_media(self.entry.get())
-        print(f"Das sidn die media items {media_items}")
         if media_items is not None:
             for idx, item in enumerate(media_items):
+                print("search_media")
+                print(item.id, item.category)
                 item_id = item.id
                 item_name = item.titel
                 item_author = item.autor_oder_regisseur
                 item_type = item.category
-                self.item_name_button = customtkinter.CTkButton(self.scrollview, text=item_name, command=lambda item_id=item_id: self.select_detail_item(item_id, item_type), anchor="w", fg_color="transparent", bg_color="transparent", hover=True, hover_color="lightgrey", corner_radius=0)
+                self.item_name_button = customtkinter.CTkButton(self.scrollview, text=item_name, command=lambda: self.select_detail_item(item_id, item_type), anchor="w", fg_color="transparent", bg_color="transparent", hover=True, hover_color="lightgrey", corner_radius=0)
                 self.item_name_button.grid(row=idx+1, column=0, padx=20, pady=(10, 0))
-                self.item_author_button = customtkinter.CTkButton(self.scrollview, text=item_author, command=lambda item_id=item_id: self.select_detail_item(item_id, item_type), anchor="w", fg_color="transparent", bg_color="transparent", hover=True, hover_color="lightgrey", corner_radius=0)
+                self.item_author_button = customtkinter.CTkButton(self.scrollview, text=item_author, command=lambda: self.select_detail_item(item_id, item_type), anchor="w", fg_color="transparent", bg_color="transparent", hover=True, hover_color="lightgrey", corner_radius=0)
                 self.item_author_button.grid(row=idx+1, column=1, padx=20, pady=(10, 0))
-                self.item_type_button = customtkinter.CTkButton(self.scrollview, text=item_type, command=lambda item_id=item_id: self.select_detail_item(item_id, item_type), anchor="w", fg_color="transparent", bg_color="transparent", hover=True, hover_color="lightgrey", corner_radius=0)
+                self.item_type_button = customtkinter.CTkButton(self.scrollview, text=item_type, command=lambda: self.select_detail_item(item_id, item_type), anchor="w", fg_color="transparent", bg_color="transparent", hover=True, hover_color="lightgrey", corner_radius=0)
                 self.item_type_button.grid(row=idx+1, column=2, padx=20, pady=(10, 0))
 
     def select_detail_item(self, item_id, item_type ):
         self.master.detail_view_media = item_id
         self.master.detail_view_media_type = item_type
-        self.master.switch_frame(DetailsFrame)
+        print(self.master.detail_view_media, self.master.detail_view_media_type)
+        self.master.switch_frame(self.master.detail_view_frame)
 
 
     def clear_search_results(self):

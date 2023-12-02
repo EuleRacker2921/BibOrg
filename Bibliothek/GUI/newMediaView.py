@@ -1,6 +1,6 @@
 import customtkinter
 
-class NewBookFrame(customtkinter.CTkFrame):
+class NewMediaFrame(customtkinter.CTkFrame):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
         self.master = master

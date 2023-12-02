@@ -7,13 +7,6 @@ class Bibliothek:
         self.medien = []
         self.detail_media = None 
 
-    def medium_hinzufuegen(self, medium):
-        self.medien.append(medium)
-
-    def medium_entfernen(self, titel):
-        self.medien = [medium for medium in self.medien if medium.titel != titel]
-
-
     def get_media_by_id_and_type(self, id, media_type):
         print("get media by id and type")
 
@@ -61,18 +54,3 @@ class Bibliothek:
             elif isinstance(medium, Spiel) and media_type == 'game' and medium.id == media_id:
                 return True
         return False
-
-    def medium_hinzufuegen(self, medium):
-        self.medien.append(medium)
-
-    def medium_entfernen(self, titel):
-        self.medien = [medium for medium in self.medien if medium.titel != titel]
-
-    def search_media(self, search_term):
-        # Hier rufen Sie die Suchfunktion aus Ihrem Datenbankhandler auf
-        db = MediaDbhandler()
-        results = db.search_engine_for_media(search_term)
-        self.create_media_objects(results)
-        print(self.medien)
-        return self.medien
-        # Weitere Logik, um die Suchergebnisse zu verarbeiten oder zurückzugeben

@@ -14,88 +14,6 @@ class Datenbank:
         print("Verbindung zur Datenbank geschlossen")
 
 # Bücher
-class BooksDbhandler(Datenbank):
-    def __init__(self):
-        super().__init__()
-
-    def add_book(self, title, author, publication_year, description, ESBN, genre, language, publisher, pages, borrowed):
-        query = "INSERT INTO books (title, author, publication_year, description, ESBN, genre, language, publisher, pages, borrowed) VALUES (?,?,?,?,?,?,?,?,?,?)"
-        with self.get_db_connection() as conn:
-            conn.execute(query, (title, author, publication_year, description, ESBN, genre, language, publisher, pages, borrowed))
-            conn.commit()
-            self.close_db_connection()
-
-    def delete_book(self, id):
-        query = "DELETE FROM books WHERE id = ?"
-        with self.get_db_connection() as conn:
-            conn.execute(query, (id,))
-            conn.commit()
-            self.close_db_connection()
-
-    def update_book(self, id, title, author, publication_year, description, ESBN, genre, language, publisher, pages):
-        query = "UPDATE books SET title = ?, author = ?, publication_year = ?, description = ?, ESBN = ?, genre = ?, language = ?, publisher = ?, pages = ? WHERE id = ?"
-        with self.get_db_connection() as conn:
-            conn.execute(query, (title, author, publication_year, description, ESBN, genre, language, publisher, pages, id))
-            conn.commit()
-            self.close_db_connection()
-
-    def get_all_books(self):
-        query = "SELECT * FROM books"
-        with self.get_db_connection() as conn:
-            cursor = conn.execute(query)
-            books = cursor.fetchall()
-            self.close_db_connection()
-            return books
-    
-    def get_book_by_id(self, id):
-        query = "SELECT * FROM books WHERE id = ?"
-        with self.get_db_connection() as conn:
-            cursor = conn.execute(query, (id,))
-            book = cursor.fetchone()
-            self.close_db_connection()
-            return book
-    
-
-    # Weitere Methoden für Bücher
-
-# Filme
-class FilmsDbhandler(Datenbank):
-    def __init__(self):
-        super().__init__()
-    def add_film(self, title, director, release_year, description, genre, language, duration, borrowed):
-        query = "INSERT INTO films (title, director, release_year, description, genre, language, duration, borrowed) VALUES (?,?,?,?,?,?,?,?)"
-        with self.get_db_connection() as conn:
-            conn.execute(query, (title, director, release_year, description, genre, language, duration, borrowed))
-            conn.commit()
-            self.close_db_connection()
-
-    # Weitere Methoden für Filme
-
-# Spiele
-class GamesDbhandler(Datenbank):
-    def __init__(self):
-        super().__init__()
-
-    def add_game(self, title, developer, release_year, genre, platform, borrowed):
-        query = "INSERT INTO games (title, developer, release_year, genre, platform, borrowed) VALUES (?,?,?,?,?,?)"
-        with self.get_db_connection() as conn:
-            conn.execute(query, (title, developer, release_year, genre, platform, borrowed))
-            conn.commit()
-            self.close_db_connection()
-
-    # Weitere Methoden für Spiele
-
-# Kunden
-class CustomerDbhandler(Datenbank):
-    def __init__(self):
-        super().__init__()
-
-    def add_customer(self, name, address, phone, email, username, password, age):
-        query = "INSERT INTO customer (name, address, phone, email, username, password, age) VALUES (?,?,?,?,?,?,?)"
-        with self.get_db_connection() as conn:
-            conn.execute(query, (name, address, phone, email, username, password, age))
-            conn.commit()
-            self.close_db_connection()
 
     # Weitere Methoden für Kunden
 
@@ -135,13 +53,20 @@ class MediaDbhandler(Datenbank):
         return media
 
     def get_media_by_id_and_type(self, id, media_type):
-        media = []
+        print(media_type)
+        if media_type == "Buch":
+            media_type = "book"
+        elif media_type == "Film":
+            media_type = "film"
+        elif media_type == "Game":
+            media_type = "game"
+        
         with self.get_db_connection() as conn:
             # Bücher suchen
             cursor = conn.execute(f"SELECT * FROM {media_type}s WHERE id = ?", (id,))
-            media = [(media_type, *row) for row in cursor.fetchall()]
+            media = cursor.fetchall()
             self.close_db_connection()
-            print(media)
+            print(f"Das ist die db media Liste {media}")
 
         return media
 

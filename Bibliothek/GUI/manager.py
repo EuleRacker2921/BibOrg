@@ -4,9 +4,10 @@ import customtkinter
 from .startView import StartFrame
 from .loginView import LoginFrame
 from .settingsView import settings_view_Frame
-from .newBookView import NewBookFrame
+from .newMediaView import NewMediaFrame
 from .newCustomerView import NewCustomerFrame
-
+from .mediaEditView import EditMediaFrame
+from .detailsView import DetailsFrame
 
 class App(customtkinter.CTk):
     def __init__(self, bibliothek, *args, **kwargs):
@@ -17,8 +18,10 @@ class App(customtkinter.CTk):
 
         self.start_frame = StartFrame
         self.settings_frame = settings_view_Frame
-        self.new_book_frame = NewBookFrame
+        self.new_media_frame = NewMediaFrame
         self.new_customer_frame = NewCustomerFrame
+        self.edit_media_frame = EditMediaFrame
+        self.detail_view_frame = DetailsFrame
 
         self.detail_view_media = None
         self.detail_view_media_type = None
@@ -42,6 +45,9 @@ class App(customtkinter.CTk):
 
 
     def go_back(self):
+        self.detail_view_media = None
+        self.detail_view_media_type = None
+        
         if self.frame_stack is not None:	
             self.current_frame.grid_forget()
             self.current_frame = self.frame_stack.pop()

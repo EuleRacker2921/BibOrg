@@ -5,13 +5,12 @@ class DetailsFrame(customtkinter.CTkFrame):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
         self.master = master
+        print(f"Setting up details frame")
         self.setup_frame()
         self.item_view_detail= self.get_detail_view_media()
-        print(f"{self.master.detail_view_media_type}")
-        print(f"Das ist das ausgewählte Item: {self.item_view_detail}")
-
+        print(f"Das ist item_view_detail in detailsView.py: {self.item_view_detail}")
         self.detailed_view_item_id = self.master.detail_view_media
-
+        print(f"Das ist detailed_view_item_id in detailsView.py: {self.detailed_view_item_id}")
         self.setup_widgets()
 
     def setup_frame(self):
@@ -72,6 +71,17 @@ class DetailsFrame(customtkinter.CTkFrame):
         self.tabview.tab("Details").grid_columnconfigure(0, weight=1)
         self.tabview.tab("Details").configure(height=800)
 
+        self.item = None
+        if len(self.item_view_detail) > 0:
+            self.item = self.item_view_detail[0]
+            print(self.item)
+            if self.item[6] == 1:
+                self.tabview.add("Ausgeliehen")
+                self.tabview.tab("Ausgeliehen").grid_rowconfigure(0, weight=1)
+                self.tabview.tab("Ausgeliehen").grid_columnconfigure(0, weight=1)
+                print("Ausgeliehen")
+
+
         self.frame_title = customtkinter.CTkLabel(self.tabview, text="Details", font=customtkinter.CTkFont(size=20, weight="bold"))
 
         
@@ -79,80 +89,172 @@ class DetailsFrame(customtkinter.CTkFrame):
         if self.master.detail_view_media_type == "book":
             self.overview_tab_bookname = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Titel", font=customtkinter.CTkFont(size=12, weight="bold"))
             self.overview_tab_bookname.grid(row=1, column=0, padx=20, pady=(20, 10), sticky="w")
-            self.overview_tab_bookname_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.book[1])
+            self.overview_tab_bookname_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[1])
             self.overview_tab_bookname_info.grid(row=1, column=1, padx=20, pady=(10, 10), sticky="w")
 
             self.overview_tab_author = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Autor", font=customtkinter.CTkFont(size=12, weight="bold"))
             self.overview_tab_author.grid(row=2, column=0, padx=20, pady=(20, 10), sticky="w")
-            self.overview_tab_author_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.book[2])
+            self.overview_tab_author_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[2])
             self.overview_tab_author_info.grid(row=2, column=1, padx=20, pady=(10, 10), sticky="w")
 
             self.overview_tab_isbn = customtkinter.CTkLabel(self.tabview.tab("Details"), text="ISBN", font=customtkinter.CTkFont(size=12, weight="bold"))
             self.overview_tab_isbn.grid(row=3, column=0, padx=20, pady=(20, 10), sticky="w")
-            self.overview_tab_isbn_info = customtkinter.CTkLabel(self.tabview.tab("Details"),text=self.book[5])
+            self.overview_tab_isbn_info = customtkinter.CTkLabel(self.tabview.tab("Details"),text=self.item[7])
             self.overview_tab_isbn_info.grid(row=3, column=1, padx=20, pady=(10, 10), sticky="w")
 
             self.overview_tab_genre = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Genre", font=customtkinter.CTkFont(size=12, weight="bold"))
             self.overview_tab_genre.grid(row=4, column=0, padx=20, pady=(20, 10), sticky="w")
-            self.overview_tab_genre_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.book[6])
+            self.overview_tab_genre_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[3])
             self.overview_tab_genre_info.grid(row=4, column=1, padx=20, pady=(10, 10), sticky="w")
 
             self.overview_tab_language = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Sprache", font=customtkinter.CTkFont(size=12, weight="bold"))
             self.overview_tab_language.grid(row=5, column=0, padx=20, pady=(20, 10), sticky="w")
-            self.overview_tab_language_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.book[7])
+            self.overview_tab_language_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[8])
             self.overview_tab_language_info.grid(row=5, column=1, padx=20, pady=(10, 10), sticky="w")
 
             self.overview_tab_publisher = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Verlag", font=customtkinter.CTkFont(size=12, weight="bold"))
             self.overview_tab_publisher.grid(row=6, column=0, padx=20, pady=(20, 10), sticky="w")
-            self.overview_tab_publisher_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.book[8])
+            self.overview_tab_publisher_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[9])
             self.overview_tab_publisher_info.grid(row=6, column=1, padx=20, pady=(10, 10), sticky="w")
 
             self.overview_tab_year = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Jahr", font=customtkinter.CTkFont(size=12, weight="bold"))
             self.overview_tab_year.grid(row=7, column=0, padx=20, pady=(20, 10), sticky="w")
-            self.overview_tab_year_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.book[3])
+            self.overview_tab_year_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[4])
             self.overview_tab_year_info.grid(row=7, column=1, padx=20, pady=(10, 10), sticky="w")
 
             self.overview_tab_pages = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Seiten", font=customtkinter.CTkFont(size=12, weight="bold"))
             self.overview_tab_pages.grid(row=8, column=0, padx=20, pady=(20, 10), sticky="w")
-            self.overview_tab_pages_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.book[9])
+            self.overview_tab_pages_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[10])
             self.overview_tab_pages_info.grid(row=8, column=1, padx=20, pady=(10, 10), sticky="w")
-
-            self.overview_spaceholder = customtkinter.CTkLabel(self.tabview.tab("Details"), text="", fg_color="transparent", bg_color="transparent")
-            self.overview_spaceholder.grid(row=9, column=0, padx=20, pady=(20, 10), sticky="w")
-
-            self.overview_spaceholder1 = customtkinter.CTkLabel(self.tabview.tab("Details"), text="", fg_color="transparent", bg_color="transparent")
-            self.overview_spaceholder1.grid(row=10, column=0, padx=20, pady=(20, 10), sticky="w")
-
-            self.overview_spaceholder2 = customtkinter.CTkLabel(self.tabview.tab("Details"), text="", fg_color="transparent", bg_color="transparent")
-            self.overview_spaceholder2.grid(row=11, column=0, padx=20, pady=(20, 10), sticky="w")
-
-            self.overview_spaceholder3 = customtkinter.CTkLabel(self.tabview.tab("Details"), text="", fg_color="transparent", bg_color="transparent")
-            self.overview_spaceholder3.grid(row=12, column=0, padx=20, pady=(20, 10), sticky="w")
-
-            self.overview_spaceholder4 = customtkinter.CTkLabel(self.tabview.tab("Details"), text="", fg_color="transparent", bg_color="transparent")
-            self.overview_spaceholder4.grid(row=13, column=0, padx=20, pady=(20, 10), sticky="w")
-
         elif self.master.detail_view_media_type == "Film":
-            pass
+            self.overview_film_name_label = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Titel", font=customtkinter.CTkFont(size=12, weight="bold"))
+            self.overview_film_name_label.grid(row=1, column=0, padx=20, pady=(20, 10), sticky="w")
+            self.overview_film_name_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[1])
+            self.overview_film_name_info.grid(row=1, column=1, padx=20, pady=(10, 10), sticky="w")
+
+            self.overview_film_regisseur_label = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Regisseur", font=customtkinter.CTkFont(size=12, weight="bold"))
+            self.overview_film_regisseur_label.grid(row=2, column=0, padx=20, pady=(20, 10), sticky="w")
+            self.overview_film_regisseur_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[2])
+            self.overview_film_regisseur_info.grid(row=2, column=1, padx=20, pady=(10, 10), sticky="w")
+
+            self.overview_film_genre_label = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Genre", font=customtkinter.CTkFont(size=12, weight="bold"))  
+            self.overview_film_genre_label.grid(row=3, column=0, padx=20, pady=(20, 10), sticky="w")
+            self.overview_film_genre_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[3])
+            self.overview_film_genre_info.grid(row=3, column=1, padx=20, pady=(10, 10), sticky="w")
+
+            self.overview_film_year_label = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Jahr", font=customtkinter.CTkFont(size=12, weight="bold"))
+            self.overview_film_year_label.grid(row=4, column=0, padx=20, pady=(20, 10), sticky="w")
+            self.overview_film_year_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[4])
+            self.overview_film_year_info.grid(row=4, column=1, padx=20, pady=(10, 10), sticky="w")
+
+            self.overview_film_language_label = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Sprache", font=customtkinter.CTkFont(size=12, weight="bold"))
+            self.overview_film_language_label.grid(row=5, column=0, padx=20, pady=(20, 10), sticky="w")
+            self.overview_film_language_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[7])
+            self.overview_film_language_info.grid(row=5, column=1, padx=20, pady=(10, 10), sticky="w")
+
+            self.overview_film_duration_label = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Dauer", font=customtkinter.CTkFont(size=12, weight="bold"))
+            self.overview_film_duration_label.grid(row=6, column=0, padx=20, pady=(20, 10), sticky="w")
+            self.overview_film_duration_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[8])
+            self.overview_film_duration_info.grid(row=6, column=1, padx=20, pady=(10, 10), sticky="w")
+
+            self.overview_film_actors_label = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Schauspieler", font=customtkinter.CTkFont(size=12, weight="bold"))
+            self.overview_film_actors_label.grid(row=7, column=0, padx=20, pady=(20, 10), sticky="w")
+            self.overview_film_actors_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[9])
+            self.overview_film_actors_info.grid(row=7, column=1, padx=20, pady=(10, 10), sticky="w")
+
+            self.overview_film_helpers_label = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Helfer", font=customtkinter.CTkFont(size=12, weight="bold"))
+            self.overview_film_helpers_label.grid(row=8, column=0, padx=20, pady=(20, 10), sticky="w")
+            self.overview_film_helpers_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[10])
+            self.overview_film_helpers_info.grid(row=8, column=1, padx=20, pady=(10, 10), sticky="w")
         elif self.master.detail_view_media_type == "Game":
-            pass
+            self.overview_title_label = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Titel", font=customtkinter.CTkFont(size=12, weight="bold"))
+            self.overview_title_label.grid(row=1, column=0, padx=20, pady=(20, 10), sticky="w")
+            self.overview_titel_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[1])
+            self.overview_titel_info.grid(row=1, column=1, padx=20, pady=(10, 10), sticky="w")
+
+            self.overview_developer_label = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Entwickler", font=customtkinter.CTkFont(size=12, weight="bold"))
+            self.overview_developer_label.grid(row=2, column=0, padx=20, pady=(20, 10), sticky="w")
+            self.overview_developer_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[2])
+            self.overview_developer_info.grid(row=2, column=1, padx=20, pady=(10, 10), sticky="w")
+
+            self.overview_genre_label = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Genre", font=customtkinter.CTkFont(size=12, weight="bold"))
+            self.overview_genre_label.grid(row=3, column=0, padx=20, pady=(20, 10), sticky="w")
+            self.overview_genre_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[3])
+            self.overview_genre_info.grid(row=3, column=1, padx=20, pady=(10, 10), sticky="w")
+
+            self.overview_year_label = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Jahr", font=customtkinter.CTkFont(size=12, weight="bold"))
+            self.overview_year_label.grid(row=4, column=0, padx=20, pady=(20, 10), sticky="w")
+            self.overview_year_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[4])
+            self.overview_year_info.grid(row=4, column=1, padx=20, pady=(10, 10), sticky="w")
+
+            self.overview_language_label = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Sprache", font=customtkinter.CTkFont(size=12, weight="bold"))
+            self.overview_language_label.grid(row=5, column=0, padx=20, pady=(20, 10), sticky="w")
+            self.overview_language_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[7])
+            self.overview_language_info.grid(row=5, column=1, padx=20, pady=(10, 10), sticky="w")
+
+            self.overview_platform_label = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Plattform", font=customtkinter.CTkFont(size=12, weight="bold"))
+            self.overview_platform_label.grid(row=6, column=0, padx=20, pady=(20, 10), sticky="w")
+            self.overview_platform_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[8])
+            self.overview_platform_info.grid(row=6, column=1, padx=20, pady=(10, 10), sticky="w")
+
+            self.overview_multiplayer_label = customtkinter.CTkLabel(self.tabview.tab("Details"), text="Multiplayer", font=customtkinter.CTkFont(size=12, weight="bold"))
+            self.overview_multiplayer_label.grid(row=7, column=0, padx=20, pady=(20, 10), sticky="w")
+            self.overview_multiplayer_info = customtkinter.CTkLabel(self.tabview.tab("Details"), text=self.item[9])
+            self.overview_multiplayer_info.grid(row=7, column=1, padx=20, pady=(10, 10), sticky="w")
+
+
+        
+        self.overview_spaceholder = customtkinter.CTkLabel(self.tabview.tab("Details"), text="", fg_color="transparent", bg_color="transparent")
+        self.overview_spaceholder.grid(row=9, column=0, padx=20, pady=(20, 10), sticky="w")
+
+        self.overview_spaceholder1 = customtkinter.CTkLabel(self.tabview.tab("Details"), text="", fg_color="transparent", bg_color="transparent")
+        self.overview_spaceholder1.grid(row=10, column=0, padx=20, pady=(20, 10), sticky="w")
+
+        self.overview_spaceholder2 = customtkinter.CTkLabel(self.tabview.tab("Details"), text="", fg_color="transparent", bg_color="transparent")
+        self.overview_spaceholder2.grid(row=11, column=0, padx=20, pady=(20, 10), sticky="w")
+
+        self.overview_spaceholder3 = customtkinter.CTkLabel(self.tabview.tab("Details"), text="", fg_color="transparent", bg_color="transparent")
+        self.overview_spaceholder3.grid(row=12, column=0, padx=20, pady=(20, 10), sticky="w")
+
+        self.overview_spaceholder4 = customtkinter.CTkLabel(self.tabview.tab("Details"), text="", fg_color="transparent", bg_color="transparent")
+        self.overview_spaceholder4.grid(row=13, column=0, padx=20, pady=(20, 10), sticky="w")
+
+        self.bearbeiten_button = customtkinter.CTkButton(self.tabview.tab("Details"), text="Bearbeiten", command=lambda: self.master.switch_frame(self.master.edit_media_frame))
+        self.bearbeiten_button.grid(row=14, column=0, padx=20, pady=(10, 10), sticky="w")
+
+        self.ausleihen_button = customtkinter.CTkButton(self.tabview.tab("Details"), text="Ausleihen An")
+        self.ausleihen_button.grid(row=14, column=1, padx=20, pady=(10, 10), sticky="e")
+
+        self.delete_button = customtkinter.CTkButton(self.tabview.tab("Details"), text="Löschen")
+        self.delete_button.grid(row=14, column=2, padx=20, pady=(10, 10), sticky="e")
+
         
         self.zusammenfassung_tab_label = customtkinter.CTkLabel(self.tabview.tab("Zusammenfassung"), text="Zusammenfassung", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.zusammenfassung_tab_label.grid(row=0, column=0, padx=20, pady=(20, 10), sticky="nw")
         self.zusammenfassung_tab_text = customtkinter.CTkTextbox(self.tabview.tab("Zusammenfassung"), width=800, height=800)
-        description_text = str(self.item_view_detail.description) if self.item_view_detail.description is not None else ""
-        self.zusammenfassung_tab_text.insert("1.0", description_text)
+        self.zusammenfassung_tab_text.insert("1.0", str(self.item[5]))
 
         self.zusammenfassung_tab_text.configure(state="disabled")
         self.zusammenfassung_tab_text.grid(row=1, column=0, padx=20, pady=(10, 10), sticky="w")
 
+        if self.item[6] == 1:
+            self.ausgeliehen_tab_label = customtkinter.CTkLabel(self.tabview.tab("Ausgeliehen"), text="Ausgeliehen An", font=customtkinter.CTkFont(size=20, weight="bold"))
+            self.ausgeliehen_tab_label.grid(row=0, column=0, padx=20, pady=(20, 10), sticky="w")
+            self.ausgeliehen_tab_text = customtkinter.CTkLabel(self.tabview.tab("Ausgeliehen"))
+            self.ausgeliehen_tab_text.grid(row=1, column=1, padx=20, pady=(10, 10), sticky="nsew")
+
+            self.ausgeliehen_tab_tickbox_zurückgegeben = customtkinter.CTkCheckBox(self.tabview.tab("Ausgeliehen"), text="Zurückgegeben", command=self.change_borrow_status_book )
+            self.ausgeliehen_tab_tickbox_zurückgegeben.grid(row=2, column=0, padx=20, pady=(10, 10), sticky="w")
+
     
     def get_detail_view_media(self):
-        if self.master.detail_view_media_type != None:
-            item_details = self.master.bibliothek.get_media_by_id_and_type(self.master.detail_view_media, self.master.detail_view_media_type)
-            return item_details
-        else:
-            pass
+        print("getting details")
+        print(self.master.detail_view_media)
+        print(self.master.detail_view_media_type)
+        item_details = self.master.bibliothek.get_media_by_id_and_type(self.master.detail_view_media, self.master.detail_view_media_type)
+        print(f"Das ist item_details in detaisView.py: {item_details}")
+        return item_details
+
 
     def open_settings(self):
         pass
