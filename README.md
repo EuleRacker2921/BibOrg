@@ -13,10 +13,13 @@ Du hast die Wahl zwischen zwei Themen:
 oder
 - Bibliothek
 
+# Credits
+[Link zur Website](https://www.jbg-ehemalige.de/ "JBG's Ehemalige") customtkinter
+
 # Was zu sehen ist
-`Bibliothek` ist das Hauptverzeichnis
-`vereinfachteAufgabe.py` ist als kleinere Version ein CMD Programm
-`vereinfachteAufgabetest.py` ist das Testscript für `vereinfachteAufgabe.py`
+- `Bibliothek` ist das Hauptverzeichnis
+- `vereinfachteAufgabe.py` ist als kleinere Version ein CMD Programm
+  `vereinfachteAufgabetest.py` ist das Testscript für `vereinfachteAufgabe.py`
 
 # Anleitung
 INFO: beste Funktion auf Windows
