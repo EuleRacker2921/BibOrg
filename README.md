@@ -70,3 +70,4 @@ pip install -r requirements.txt
 ```bash
 python -m Bibliothek
 ```
+8. Anmelden mit Benutzername: `admin` pwd: `admin`
