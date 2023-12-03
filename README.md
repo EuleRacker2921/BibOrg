@@ -13,6 +13,11 @@ Du hast die Wahl zwischen zwei Themen:
 oder
 - Bibliothek
 
+# Was zu sehen ist
+`Bibliothek` ist das Hauptverzeichnis
+'vereinfachteAufgabe.py' ist als kleinere Version ein CMD Programm
+`vereinfachteAufgabetest.py` ist das Testscript für `vereinfachteAufgabe.py`
+
 # Anleitung
 INFO: beste Funktion auf Windows
 1. Das Repo herunterladen
