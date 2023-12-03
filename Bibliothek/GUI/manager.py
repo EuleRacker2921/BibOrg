@@ -1,13 +1,16 @@
 import customtkinter
 
+from ..datenmodelle.bibliothek import Bibliothek
 
-from .startView import StartFrame
+
+from .startView import StartFrame, ItemFrame
 from .loginView import LoginFrame
 from .settingsView import settings_view_Frame
 from .newMediaView import NewMediaFrame
 from .newCustomerView import NewCustomerFrame
 from .mediaEditView import EditMediaFrame
 from .detailsView import DetailsFrame
+from .cameraView import CameraFrame
 
 class App(customtkinter.CTk):
     def __init__(self, bibliothek, *args, **kwargs):
@@ -22,12 +25,15 @@ class App(customtkinter.CTk):
         self.new_customer_frame = NewCustomerFrame
         self.edit_media_frame = EditMediaFrame
         self.detail_view_frame = DetailsFrame
+        self.login_frame = LoginFrame
+        self.item_frame = ItemFrame
+        self.camera_frame = CameraFrame
 
         self.detail_view_media = None
         self.detail_view_media_type = None
 
         self.setup_app()
-        self.switch_frame(LoginFrame)
+        self.switch_frame(self.login_frame)
 
     def setup_app(self):
         self.title("Bibliothek")

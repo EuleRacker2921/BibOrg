@@ -55,6 +55,24 @@ class CustomerDbhandler(Datenbank):
 class MediaDbhandler(Datenbank):
     def __init__(self):
         super().__init__()
+
+    def add_media(self, media_data, item_type):
+        query = ""
+        if item_type == "book":
+            query = "INSERT INTO books (title, author, genre, publication_year, description, borrowed, language, ESBN, publisher, pages) VALUES (?,?,?,?,?,0,?,?,?,?)"
+        elif item_type == "film":
+            query = "INSERT INTO films (title, regisseur, genre, publication_year, description, borrowed, language, duration, actors, helpers) VALUES (?,?,?,?,?,0,?,?,?,?)"
+        elif item_type == "game":
+            query = "INSERT INTO games (title, developer, genre, publication_year, description, borrowed, language, platform) VALUES (?,?,?,?,?,0,?,?,?,?)"
+        with self.get_db_connection() as conn:
+            if item_type == "book":
+                conn.execute(query, (media_data[0], media_data[1], media_data[2], media_data[3], media_data[4], media_data[5], media_data[7], media_data[6], media_data[8]))
+            elif item_type == "film":
+                conn.execute(query, (media_data[0], media_data[1], media_data[2], media_data[3], media_data[4], media_data[5], media_data[6], media_data[7], media_data[8], media_data[9]))
+            elif item_type == "game":
+                conn.execute(query, (media_data[0], media_data[1], media_data[2], media_data[3], media_data[4], media_data[5], media_data[6], media_data[7]))
+            conn.commit()
+            self.close_db_connection()
     
     def update_media(self, media, item_type):
         item_id = media.id

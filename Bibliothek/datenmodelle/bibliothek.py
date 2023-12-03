@@ -7,7 +7,11 @@ class Bibliothek:
     def __init__(self):
         self.medien = []
         self.detail_media = None 
-
+    
+    def add_media(self, media_data, item_type):
+        print("add media")
+        db = MediaDbhandler()
+        db.add_media(media_data, item_type)
 
     def add_customer(self, name, username, email):
         print("add customer")

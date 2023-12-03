@@ -103,7 +103,7 @@ class StartFrame(customtkinter.CTkFrame):
         self.search_button = customtkinter.CTkButton(self, text="Search", command=self.search_media, width=10, height=50, corner_radius=0)
         self.search_button.grid(row=0, column=3, padx=(0, 20), pady=(10, 20), sticky="nsew")
         # Camera Scan Button
-        self.camera_scan_button = customtkinter.CTkButton(self, text="Scan")
+        self.camera_scan_button = customtkinter.CTkButton(self, text="Scan", command=lambda: self.master.switch_frame(self.master.camera_frame))
         self.camera_scan_button.grid(row=0, column=4, padx=(0, 20), pady=(10, 20), sticky="nsew")
 
 
