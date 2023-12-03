@@ -14,7 +14,7 @@ oder
 - Bibliothek
 
 # Credits
-[customtkinter von Tom Schimansky](https://github.com/TomSchimansky/CustomTkinter)")
+[customtkinter von Tom Schimansky](https://github.com/TomSchimansky/CustomTkinter)
 
 
 # Was zu sehen ist
