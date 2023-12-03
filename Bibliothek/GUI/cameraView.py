@@ -9,9 +9,8 @@ class CameraFrame(customtkinter.CTkFrame):
         super().__init__(master, *args, **kwargs)
 
         self.master = master
-        self.setup_sidebar()  # Diese Methode musst du entsprechend deinem Code definieren
         self.frame = customtkinter.CTkFrame(master=self)
-        self.frame.grid(row=1, column=5, sticky="nsew")  # Modified: Placed in column 2
+        self.frame.grid(row=1, column=5, sticky="nsew")
 
         self.vid = cv2.VideoCapture(0)
         width, height = 800, 600
@@ -28,7 +27,6 @@ class CameraFrame(customtkinter.CTkFrame):
 
         self.open_camera()
 
-    def setup_sidebar(self):
         self.sidebar_frame = customtkinter.CTkFrame(self, width=280 , corner_radius=10)
         self.sidebar_frame.grid(row=0, column=0, rowspan=10, sticky="nsew")
         self.sidebar_frame.grid_rowconfigure(10, weight=1)
