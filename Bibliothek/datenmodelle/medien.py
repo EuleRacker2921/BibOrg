@@ -20,9 +20,17 @@ class Medien:
     def zurueckgeben(self):
         self.borrowed = False
 
+    
 
-    def __str__(self):
-        return f"{self.titel} von {self.autor_oder_regisseur}, Genre: {self.genre}, {'Ausgeliehen' if self.borrowed else 'Verfügbar'}"
+class BorrowedMedia:
+    def __init__(self, media_id, media_type,  customer_id, borrow_date, return_date, zurückgebracht):
+        self.media_id = media_id
+        self.media_type = media_type
+        self.customer_id = customer_id
+        self.borrow_date = borrow_date
+        self.return_date = return_date
+        self.zurückgebracht = zurückgebracht
+
 
 class Buch(Medien):
     def __init__(self, id, titel, autor_oder_regisseur, genre, publication_year, description, borrowed, ESBN, language,  publisher, pages, category="Buch"):

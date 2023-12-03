@@ -1,8 +1,32 @@
 import customtkinter
 
 from  ..datenbank import MediaDbhandler
+from .detailsView import DetailsFrame
 
+class ItemFrame(customtkinter.CTkFrame):
+    def __init__(self, startframe, master, item, *args, **kwargs):
+        super().__init__(master, *args, **kwargs)
+        self.startframe = startframe
+        self.master = master
+        self.item = item
+        self.setup_widgets()
+        print(f"finished building ItemFrame for: {self.item}")
 
+    def setup_widgets(self):
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_columnconfigure(2, weight=1)
+
+        self.name_Button = customtkinter.CTkButton(self, text=self.item.titel, command=self.on_click, anchor="w", fg_color="transparent", bg_color="transparent", hover=True, hover_color="lightgrey", corner_radius=0)
+        self.name_Button.grid(row=0, column=0, padx=20, pady=(10, 0), sticky="nsew")
+        self.author_button = customtkinter.CTkButton(self, text=self.item.autor_oder_regisseur, command=self.on_click, anchor="w", fg_color="transparent", bg_color="transparent", hover=True, hover_color="lightgrey", corner_radius=0)
+        self.author_button.grid(row=0, column=1, padx=20, pady=(10, 0), sticky="nsew")
+        self.type_button = customtkinter.CTkButton(self, text=self.item.category, command=self.on_click, anchor="w", fg_color="transparent", bg_color="transparent", hover=True, hover_color="lightgrey", corner_radius=0)
+        self.type_button.grid(row=0, column=2, padx=20, pady=(10, 0), sticky="nsew")
+
+    def on_click(self):
+        self.startframe.show_details(item=self.item)
+    
 
 
 class StartFrame(customtkinter.CTkFrame):
@@ -13,6 +37,7 @@ class StartFrame(customtkinter.CTkFrame):
         self.setup_side_bar()
         self.setup_widgets()
 
+        self.clear_search_results
 
 
     def setup_frame(self):
@@ -99,32 +124,24 @@ class StartFrame(customtkinter.CTkFrame):
 
 
         media_items = self.master.bibliothek.search_media(self.entry.get())
-        if media_items is not None:
-            for idx, item in enumerate(media_items):
-                print("search_media")
-                print(item.id, item.category)
-                item_id = item.id
-                item_name = item.titel
-                item_author = item.autor_oder_regisseur
-                item_type = item.category
-                self.item_name_button = customtkinter.CTkButton(self.scrollview, text=item_name, command=lambda: self.select_detail_item(item_id, item_type), anchor="w", fg_color="transparent", bg_color="transparent", hover=True, hover_color="lightgrey", corner_radius=0)
-                self.item_name_button.grid(row=idx+1, column=0, padx=20, pady=(10, 0))
-                self.item_author_button = customtkinter.CTkButton(self.scrollview, text=item_author, command=lambda: self.select_detail_item(item_id, item_type), anchor="w", fg_color="transparent", bg_color="transparent", hover=True, hover_color="lightgrey", corner_radius=0)
-                self.item_author_button.grid(row=idx+1, column=1, padx=20, pady=(10, 0))
-                self.item_type_button = customtkinter.CTkButton(self.scrollview, text=item_type, command=lambda: self.select_detail_item(item_id, item_type), anchor="w", fg_color="transparent", bg_color="transparent", hover=True, hover_color="lightgrey", corner_radius=0)
-                self.item_type_button.grid(row=idx+1, column=2, padx=20, pady=(10, 0))
+        print(f"media_items: {media_items}")
+        if media_items is None:
+            return
+        itemframes = []
+        for index, item in enumerate(media_items):
+            print(f"building item: {type(item)} - {item}")
+            item = ItemFrame(self, self.scrollview, item)
+            itemframes.append(item)
+            item.grid(row=index+1, column=0, columnspan=3, padx=20, pady=(10, 0), sticky="nsew")
+        print("finished building itemframes", itemframes)
 
-    def select_detail_item(self, item_id, item_type ):
-        self.master.detail_view_media = item_id
-        self.master.detail_view_media_type = item_type
-        print(self.master.detail_view_media, self.master.detail_view_media_type)
-        self.master.switch_frame(self.master.detail_view_frame)
+
+    def show_details(self, item):
+        self.master.switch_frame(self.master.detail_view_frame, item=item)
 
 
     def clear_search_results(self):
-
         for widget in self.scrollview.winfo_children():
             if widget not in [self.table_label, self.table_label1, self.table_label2]:
                 print("deleted some widgets")
                 widget.destroy()
-

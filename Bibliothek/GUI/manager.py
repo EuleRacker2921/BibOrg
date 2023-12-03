@@ -45,9 +45,6 @@ class App(customtkinter.CTk):
 
 
     def go_back(self):
-        self.detail_view_media = None
-        self.detail_view_media_type = None
-        
         if self.frame_stack is not None:	
             self.current_frame.grid_forget()
             self.current_frame = self.frame_stack.pop()

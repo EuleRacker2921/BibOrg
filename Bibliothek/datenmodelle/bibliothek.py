@@ -1,17 +1,77 @@
-from .medien import Buch, Film, Spiel
+from .medien import Buch, Film, Spiel, BorrowedMedia
+from .customer import Customer
 
-from ..datenbank import MediaDbhandler
+from ..datenbank import MediaDbhandler, BorrowedMediaDbhandler, CustomerDbhandler
 
 class Bibliothek:
     def __init__(self):
         self.medien = []
         self.detail_media = None 
 
-    def get_media_by_id_and_type(self, id, media_type):
+
+    def add_customer(self, name, username, email):
+        print("add customer")
+        db = CustomerDbhandler()
+        db.add_customer(name, username, email)
+
+
+    def return_media_by_id(self, media_id, media_type):
+        print("return media")
+        db = BorrowedMediaDbhandler()
+        db.return_media(media_id, media_type)
+
+    def update_media(self, media, item_type):
+        print("update media")
+        db = MediaDbhandler()
+        db.update_media(media, item_type)
+
+    def get_borrowed_media_by_id(self, media_id, media_type):
+        print("get borrowed media by id")
+        db = BorrowedMediaDbhandler()
+        result = db.get_borrowed_media_by_id(media_id, media_type)
+        print(result)
+        id, media_id, media_type, customer_id, borrow_date, return_date, zurückgebracht = result[0]
+        borrowedMedia = BorrowedMedia(media_id, media_type, customer_id, borrow_date, return_date, zurückgebracht)
+        return borrowedMedia
+
+    def get_customer_by_id(self, customer_id):
+        print("get customer by id")
+        db = CustomerDbhandler()
+        result = db.get_customer_by_id(customer_id)
+        created_customer = self.create_customer_object(result)
+        return created_customer
+
+
+    def delete_media_by_id(self, media_id, media_type):
+        print("delete media by id")
+        db = MediaDbhandler()
+        db.delete_media_by_id(media_id, media_type)
+
+    def get_customer_by_name(self, name):
+        print("get customer by name")
+        db = CustomerDbhandler()
+        result = db.get_customer_by_name(name)
+        created_customer = self.create_customer_object(result)
+        return created_customer
+
+    def create_customer_object(self, customer_data):
+        print("create customer object")
+        
+        customer_id, name, username, email = customer_data[0]
+        customer = Customer(customer_id, name, username, email)
+        return customer
+
+    def create_borrowed_media_object(self, media_id,media_type, customer_id, borrow_date, return_date, zurückgebracht):
+        borrowedMedia = BorrowedMedia(media_id,media_type, customer_id, borrow_date, return_date, zurückgebracht)
+        db = BorrowedMediaDbhandler()
+        db.create_borrowed_media(borrowedMedia)
+        return borrowedMedia
+
+    def get_media_by_id_and_type(self, myid, media_type):
         print("get media by id and type")
 
         db = MediaDbhandler()
-        result = db.get_media_by_id_and_type(id, media_type)
+        result = db.get_media_by_id_and_type(myid, media_type)
         self.create_media_objects(result)
         print("finished creating media objects")
         self.detail_media = result

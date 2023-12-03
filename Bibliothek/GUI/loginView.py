@@ -14,7 +14,7 @@ class LoginFrame(customtkinter.CTkFrame):
         self.place(relx=0.5, rely=0.5, anchor="center")
 
 
-    def login(self, username, password):
+    def login(self, username, password, event=None):
         db = UsersDbhandler()
         user_validate = db.validate_user(username, password)
         if user_validate:
@@ -23,7 +23,7 @@ class LoginFrame(customtkinter.CTkFrame):
             self.master.switch_frame(self.master.start_frame)
         else:
             self.error_label.configure(text="Benutzername oder Passwort falsch!")
-            self.error_label.pack(pady=12, padx=10, anchor="nsew")
+            self.error_label.pack(pady=12, padx=10, anchor="s")
         
 
     def setup_widgets(self):
@@ -41,5 +41,6 @@ class LoginFrame(customtkinter.CTkFrame):
 
         button = customtkinter.CTkButton(master=self.frame, text='Login', command=lambda: self.login(user_entry.get(), user_pass.get()))
         button.pack(pady=12, padx=10)
+        self.bind("<Return>", lambda event: self.login(user_entry.get(), user_pass.get()))
 
         self.error_label = customtkinter.CTkLabel(text="Falscher Benutzername oder Passwort", master=self, fg_color="red")
