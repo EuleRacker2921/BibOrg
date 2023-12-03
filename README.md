@@ -13,3 +13,45 @@ Du hast die Wahl zwischen zwei Themen:
 oder
 - Bibliothek
 
+# Credits
+[Link zur Website](https://www.jbg-ehemalige.de/ "JBG's Ehemalige") customtkinter
+
+# Was zu sehen ist
+- `Bibliothek` ist das Hauptverzeichnis
+- `vereinfachteAufgabe.py` ist als kleinere Version ein CMD Programm
+- `vereinfachteAufgabetest.py` ist das Testscript für `vereinfachteAufgabe.py`
+- `./UML` enthält alle UML Diagramme vom Project
+- `./pics` enthält ein Prove, dass die Camera Barcode erkennung funktioniert
+
+# Anleitung
+INFO: beste Funktion auf Windows
+1. Das Repo herunterladen
+2. Ein Virtual Enviroment erstellen
+
+```bash
+python -m venv venv
+```
+
+4. Venv  aktivieren
+Windows:
+
+```bash
+./venv/Scripts/activate
+```
+
+MacOs:
+
+```bash
+source venv/bin/activate
+```
+
+5. Dependecys herunterladen
+
+```bash
+pip install -r requirements.txt
+```
+
+7. Im Ordner BIBORG bzw im Übergeordneten Ordner `BIBORG`
+```bash
+python -m Bibliothek
+```
