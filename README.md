@@ -19,7 +19,7 @@ oder
 # Was zu sehen ist
 - `Bibliothek` ist das Hauptverzeichnis
 - `vereinfachteAufgabe.py` ist als kleinere Version ein CMD Programm
-  `vereinfachteAufgabetest.py` ist das Testscript für `vereinfachteAufgabe.py`
+- `vereinfachteAufgabetest.py` ist das Testscript für `vereinfachteAufgabe.py`
 
 # Anleitung
 INFO: beste Funktion auf Windows
