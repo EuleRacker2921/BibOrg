@@ -15,7 +15,7 @@ oder
 
 # Was zu sehen ist
 `Bibliothek` ist das Hauptverzeichnis
-'vereinfachteAufgabe.py' ist als kleinere Version ein CMD Programm
+`vereinfachteAufgabe.py` ist als kleinere Version ein CMD Programm
 `vereinfachteAufgabetest.py` ist das Testscript für `vereinfachteAufgabe.py`
 
 # Anleitung
