@@ -14,7 +14,8 @@ oder
 - Bibliothek
 
 # Credits
-[Link zur Website](https://www.jbg-ehemalige.de/ "JBG's Ehemalige") customtkinter
+[customtkinter von Tom Schimansky](https://github.com/TomSchimansky/CustomTkinter)")
+
 
 # Was zu sehen ist
 - `Bibliothek` ist das Hauptverzeichnis
