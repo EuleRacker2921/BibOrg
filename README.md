@@ -20,6 +20,8 @@ oder
 - `Bibliothek` ist das Hauptverzeichnis
 - `vereinfachteAufgabe.py` ist als kleinere Version ein CMD Programm
 - `vereinfachteAufgabetest.py` ist das Testscript für `vereinfachteAufgabe.py`
+- `./UML` enthält alle UML Diagramme vom Project
+- `./pics` enthält ein Prove, dass die Camera Barcode erkennung funktioniert
 
 # Anleitung
 INFO: beste Funktion auf Windows
