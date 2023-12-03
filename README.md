@@ -26,6 +26,20 @@ oder
 
 # Anleitung
 INFO: beste Funktion auf Windows
+INFO: Folgende Funktionen sind noch nicht voll nutzbar:
+- Camera Scan Barcode --> scant zwar wird aber nicht verarbeitet
+- Favourite Buttons
+- Settings Button bzw Das Frame
+    - Soll Anzeigemodus einstellen können
+        - Dark
+        - White
+        - System
+    - GUI Größe anpassbar machen
+    - Favourites Einstellbar machen
+    - User Verwaltung
+    - usw    
+
+
 1. Das Repo herunterladen
 2. Ein Virtual Enviroment erstellen
 
